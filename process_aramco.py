@@ -43,7 +43,7 @@ for i in range(0,train_snapshot_num):
 
     filename= "aramco-snapshot-%s.f32" % str(i+train_start)
     filepath=os.path.join(path,filename)
-    array=np.fromfile(filepath,dtype=np.float32).reshape((height,width))
+    array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
         #print(array)
     count=0
     for z in range(0,height):
