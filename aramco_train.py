@@ -25,10 +25,10 @@ weights_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_weights.hdf5')  # where
 json_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_model.json')
 
 # Data files
-train_file = os.path.join(DATA_DIR, 'X_train.hkl')
-train_sources = os.path.join(DATA_DIR, 'sources_train.hkl')
-val_file = os.path.join(DATA_DIR, 'X_val.hkl')
-val_sources = os.path.join(DATA_DIR, 'sources_val.hkl')
+train_file = os.path.join(DATA_DIR, 'X_val.hkl')
+train_sources = os.path.join(DATA_DIR, 'sources_val.hkl')
+val_file = os.path.join(DATA_DIR, 'X_test.hkl')
+val_sources = os.path.join(DATA_DIR, 'sources_test.hkl')
 
 # Training parameters
 nb_epoch = 150
