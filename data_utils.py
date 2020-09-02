@@ -47,13 +47,17 @@ class SequenceGenerator(Iterator):
         return self.next()
 
     def next(self):
-        with self.lock:
-            current_index = (self.batch_index * self.batch_size) % self.n
-            index_array, current_batch_size = next(self.index_generator), self.batch_size
+        #with self.lock:
+        current_index = (self.batch_index * self.batch_size) % self.n
+        index_array, current_batch_size = next(self.index_generator), self.batch_size
+        #with end 
+
+
         batch_x = np.zeros((current_batch_size, self.nt) + self.im_shape, np.float32)
         for i, idx in enumerate(index_array):
             idx = self.possible_starts[idx]
-            batch_x[i] = self.preprocess(self.X[idx:idx+self.nt])
+            #batch_x[i] = self.preprocess(self.X[idx:idx+self.nt])
+            batch_x[i]=self.X[idx:idx+self.nt]
         if self.output_mode == 'error':  # model outputs errors, so y should be zeros
             batch_y = np.zeros(current_batch_size, np.float32)
         elif self.output_mode == 'prediction':  # output actual pixels
@@ -66,5 +70,6 @@ class SequenceGenerator(Iterator):
     def create_all(self):
         X_all = np.zeros((self.N_sequences, self.nt) + self.im_shape, np.float32)
         for i, idx in enumerate(self.possible_starts):
-            X_all[i] = self.preprocess(self.X[idx:idx+self.nt])
+            #X_all[i] = self.preprocess(self.X[idx:idx+self.nt])
+            X_all[i] = self.X[idx:idx+self.nt]
         return X_all
