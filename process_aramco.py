@@ -108,8 +108,8 @@ for i in range(0,test_snapshot_num):
                 test_source[count*val_snapshot_num+i]=i
                 count=count+1
 
-maximum=np.max(train,val,test)
-minimum=np.min(train,val,test)
+maximum=max(np.max(train),np.max(val),np.max(test))
+minimum=min(np.min(train),np.min(val),np.min(test))
 with open("minmax.txt","w") as f:
     f.write(str(maximum)+"\n"+str(minimum))
 
