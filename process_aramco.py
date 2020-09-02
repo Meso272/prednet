@@ -38,7 +38,7 @@ val_start=3581
 test_start=3591
 path="./aramco/"
 train=np.zeros((train_num,xsize,ysize,1))
-train_source=[0]*train_num
+train_source=[(0,0,0)]*train_num
 for i in range(0,train_snapshot_num):
 
     filename= "aramco-snapshot-%s.f32" % str(i+train_start)
@@ -57,7 +57,7 @@ for i in range(0,train_snapshot_num):
                 pict=np.pad(pict,((0,padx),(0,pady)))
                 pict=np.expand_dims(pict,2)
                 train[count*train_snapshot_num+i]=pict
-                train_source[count*train_snapshot_num+i]=i
+                train_source[count*train_snapshot_num+i]=(x,y,z)
                 count=count+1
                 #print(array[x:x+size,y:y+size])
 
@@ -82,7 +82,7 @@ for i in range(0,val_snapshot_num):
                 pict=np.pad(pict,((0,padx),(0,pady)))
                 pict=np.expand_dims(pict,2)
                 val[count*val_snapshot_num+i]=pict
-                val_source[count*val_snapshot_num+i]=i
+                val_source[count*val_snapshot_num+i]=(x,y,z)
                 count=count+1
 
 test=np.zeros((test_num,xsize,ysize,1))
@@ -105,7 +105,7 @@ for i in range(0,test_snapshot_num):
                 pict=np.pad(pict,((0,padx),(0,pady)))
                 pict=np.expand_dims(pict,2)
                 test[count*val_snapshot_num+i]=pict
-                test_source[count*val_snapshot_num+i]=i
+                test_source[count*val_snapshot_num+i]=(x,y,z)
                 count=count+1
 
 maximum=max(np.max(train),np.max(val),np.max(test))
