@@ -48,10 +48,11 @@ class SequenceGenerator(Iterator):
         return self.next()
 
     def next(self):
-        #with self.lock:
         print("next0")
-        current_index = (self.batch_index * self.batch_size) % self.n
-        index_array, current_batch_size = next(self.index_generator), self.batch_size
+        with self.lock:
+            
+            current_index = (self.batch_index * self.batch_size) % self.n
+            index_array, current_batch_size = next(self.index_generator), self.batch_size
         #with end 
         print("next1")
 
