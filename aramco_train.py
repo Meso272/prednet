@@ -33,7 +33,7 @@ val_sources = os.path.join(DATA_DIR, 'sources_val.hkl')
 # Training parameters
 nb_epoch = 150
 batch_size = 4
-samples_per_epoch = 500
+samples_per_epoch = 8
 N_seq_val = 100  # number of sequences to use for validation
 
 # Model parameters
@@ -73,7 +73,7 @@ if save_model:
     callbacks.append(ModelCheckpoint(filepath=weights_file, monitor='val_loss', save_best_only=True))
 
 history = model.fit_generator(train_generator, samples_per_epoch / batch_size, nb_epoch, callbacks=callbacks,
-                validation_data=val_generator, validation_steps=N_seq_val / batch_size)
+                validation_data=val_generator, validation_steps=N_seq_val / batch_size,verbose=1)
 
 if save_model:
     json_string = model.to_json()
