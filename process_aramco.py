@@ -29,7 +29,7 @@ if not os.path.exists(DATA_DIR): os.mkdir(DATA_DIR)
 train_snapshot_num=80
 train_num=4*3*height*train_snapshot_num
 val_snapshot_num=10
-train_num=4*3*height*val_snapshot_num
+val_num=4*3*height*val_snapshot_num
 test_snapshot_num=10
 test_num=4*3*height*test_snapshot_num
 
