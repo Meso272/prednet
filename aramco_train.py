@@ -4,7 +4,7 @@ Train PredNet on KITTI sequences. (Geiger et al. 2013, http://www.cvlibs.net/dat
 
 import os
 import numpy as np
-np.random.seed(123)
+np.random.seed(114514)
 from six.moves import cPickle
 
 from keras import backend as K
@@ -17,12 +17,12 @@ from keras.optimizers import Adam
 
 from prednet import PredNet
 from data_utils import SequenceGenerator
-from kitti_settings import *
+from aramco_settings import *
 
 
 save_model = True  # if weights will be saved
-weights_file = os.path.join(WEIGHTS_DIR, 'prednet_kitti_weights.hdf5')  # where weights will be saved
-json_file = os.path.join(WEIGHTS_DIR, 'prednet_kitti_model.json')
+weights_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_weights.hdf5')  # where weights will be saved
+json_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_model.json')
 
 # Data files
 train_file = os.path.join(DATA_DIR, 'X_train.hkl')
@@ -37,7 +37,7 @@ samples_per_epoch = 500
 N_seq_val = 100  # number of sequences to use for validation
 
 # Model parameters
-n_channels, im_height, im_width = (3, 128, 160)
+n_channels, im_height, im_width = (1, 128, 160)
 input_shape = (n_channels, im_height, im_width) if K.image_data_format() == 'channels_first' else (im_height, im_width, n_channels)
 stack_sizes = (n_channels, 48, 96, 192)
 R_stack_sizes = stack_sizes
