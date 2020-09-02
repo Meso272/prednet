@@ -47,7 +47,7 @@ for i in range(0,train_snapshot_num):
         #print(array)
     count=0
     for z in range(0,height):
-        for x in range(0,length,zsize):
+        for x in range(0,length,xsize):
             for y in range(0,width,ysize):
                 endx=min(x+xsize,length)
                 endy=min(y+ysize,width)
