@@ -18,8 +18,8 @@ from keras.optimizers import Adam
 from prednet import PredNet
 from data_utils import SequenceGenerator
 from aramco_settings import *
-
-
+import multiprocessing
+multiprocessing.set_start_method('spawn')
 save_model = True  # if weights will be saved
 weights_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_weights.hdf5')  # where weights will be saved
 json_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_model.json')
