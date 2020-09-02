@@ -68,11 +68,11 @@ for i in range(0,val_snapshot_num):
 
     filename= "aramco-snapshot-%s.f32" % str(i+val_start)
     filepath=os.path.join(path,filename)
-    array=np.fromfile(filepath,dtype=np.float32).reshape((height,width))
+    array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
         #print(array)
     count=0
     for z in range(0,height):
-        for x in range(0,length,zsize):
+        for x in range(0,length,xsize):
             for y in range(0,width,ysize):
                 endx=min(x+xsize,length)
                 endy=min(y+ysize,width)
@@ -91,11 +91,11 @@ for i in range(0,test_snapshot_num):
 
     filename= "aramco-snapshot-%s.f32" % str(i+test_start)
     filepath=os.path.join(path,filename)
-    array=np.fromfile(filepath,dtype=np.float32).reshape((height,width))
+    array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
         #print(array)
     count=0
     for z in range(0,height):
-        for x in range(0,length,zsize):
+        for x in range(0,length,xsize):
             for y in range(0,width,ysize):
                 endx=min(x+xsize,length)
                 endy=min(y+ysize,width)
