@@ -36,7 +36,7 @@ test_num=4*3*height*test_snapshot_num
 train_start=3501
 val_start=3581
 test_start=3591
-
+path="./aramcp/"
 train=np.zeros((train_num,xsize,ysize,1))
 train_source=[0]*train_num
 for i in range(0,train_snapshot_num):
