@@ -42,42 +42,42 @@ class SequenceGenerator(Iterator):
             self.possible_starts = self.possible_starts[:N_seq]
         self.N_sequences = len(self.possible_starts)
         super(SequenceGenerator, self).__init__(len(self.possible_starts), batch_size, shuffle, seed)
-        print("init success")
+        #print("init success")
     def __getitem__(self, null):
-        print("getitem")
+        #print("getitem")
         return self.next()
 
     def next(self):
-        print("next0")
+        #print("next0")
         with self.lock:
             
             current_index = (self.batch_index * self.batch_size) % self.n
             index_array, current_batch_size = next(self.index_generator), self.batch_size
         #with end 
-        print("next1")
+        #print("next1")
 
         batch_x = np.zeros((current_batch_size, self.nt) + self.im_shape, np.float32)
-        print("next2")
+        #print("next2")
         for i, idx in enumerate(index_array):
             idx = self.possible_starts[idx]
             #batch_x[i] = self.preprocess(self.X[idx:idx+self.nt])
             batch_x[i]=self.X[idx:idx+self.nt]
-        print("next3")
+        #print("next3")
         if self.output_mode == 'error':  # model outputs errors, so y should be zeros
             batch_y = np.zeros(current_batch_size, np.float32)
         elif self.output_mode == 'prediction':  # output actual pixels
             batch_y = batch_x
-        print("next4")
+        #print("next4")
         return batch_x, batch_y
 
     def preprocess(self, X):
         return X.astype(np.float32) / 255
 
     def create_all(self):
-        print("ca0")
+        #print("ca0")
         X_all = np.zeros((self.N_sequences, self.nt) + self.im_shape, np.float32)
         for i, idx in enumerate(self.possible_starts):
             #X_all[i] = self.preprocess(self.X[idx:idx+self.nt])
             X_all[i] = self.X[idx:idx+self.nt]
-        print("ca1")
+        #print("ca1")
         return X_all
