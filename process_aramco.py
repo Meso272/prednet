@@ -15,7 +15,7 @@ length=449
 width=449
 height=235
 xsize=128
-ysize=160
+ysize=128
 
 
 #categories = ['city', 'residential', 'road']
@@ -27,11 +27,11 @@ ysize=160
 
 if not os.path.exists(DATA_DIR): os.mkdir(DATA_DIR)
 train_snapshot_num=100
-train_num=4*3*height*train_snapshot_num
+train_num=4*4*height*train_snapshot_num
 val_snapshot_num=20
-val_num=4*3*height*val_snapshot_num
+val_num=4*4*height*val_snapshot_num
 test_snapshot_num=30
-test_num=4*3*height*test_snapshot_num
+test_num=4*4*height*test_snapshot_num
 
 train_start=1400
 val_start=1500

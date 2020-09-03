@@ -56,8 +56,8 @@ length=449
 width=449
 height=235
 xsize=128
-ysize=160
-region_num=4*3*height
+ysize=128
+region_num=4*4*height
 path="./aramco/"
 with open("minmax.txt","r") as f:
     l=eval(f.read().strip())
