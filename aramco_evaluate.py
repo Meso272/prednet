@@ -124,7 +124,7 @@ for i in range(0,test_timestep_num):
                 pady=ysize-pict.shape[1]
                 pict=np.pad(pict,((0,padx),(0,pady)))
                 pict=(np.expand_dims(pict,2)+minimum)/(minimum+maximum)
-                series[idx]=np.concatenate(( series[idx,1:,:,:,:],np.expand_dims(picts,axis=0) ),axis=0)
+                series[idx]=np.concatenate(( series[idx,1:,:,:,:],np.expand_dims(pict,axis=0) ),axis=0)
                 idx=idx+1
                
 
