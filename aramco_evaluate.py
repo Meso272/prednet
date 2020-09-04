@@ -95,7 +95,7 @@ for i in range(0,test_timestep_num):
     predpath=os.path.join(path,predname)
     preds=test_model.predict(series,batch_size=16)
 
-    predarray=np.zeros(length,width,height)
+    predarray=np.zeros((length,width,height),dtype=np.float32)
     for i,cor in enumerate(source):
         x=cor[0]
         y=cor[1]
