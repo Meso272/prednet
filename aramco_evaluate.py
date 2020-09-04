@@ -63,7 +63,7 @@ with open("minmax.txt","r") as f:
     l=eval(f.read().strip())
     maximum=l[0]
     minimum=l[1]
-    print(maxinum)
+    print(maximum)
     print(minimum)
 
 series=np.zeros((region_num,nt,xsize,ysize,1))
