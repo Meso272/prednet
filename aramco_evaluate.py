@@ -87,7 +87,7 @@ for i in range(0,nt):
                 source[idx]=(x,y,z)
                 idx=idx+1
                
-for i in range(0,test_snapshot_num):
+for i in range(0,test_timestep_num):
 
     filename= "aramco-snapshot-%s.f32" % str(i+test_start)
     predname="aramco-snapshot-%s-pred.f32" % str(i+test_start)
@@ -104,7 +104,8 @@ for i in range(0,test_snapshot_num):
         endx=min(x+xsize,length)
         endy=min(y+ysize,width)
         predarray[x:endx,y:endy,z]=preds[i,-1,:,:,0]
-    np.tofile(predpath)
+    preadarray=predarray*(minimum+maximum)-mininum
+    predarray.tofile(predpath)
 
     array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
         #print(array)
