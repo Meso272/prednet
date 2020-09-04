@@ -108,7 +108,7 @@ for i in range(0,test_timestep_num):
         endx=min(x+xsize,length)
         endy=min(y+ysize,width)
         predarray[x:endx,y:endy,z]=preds[i,-1,:(endx-x),:(endy-y),0]
-    predarray=predarray*(minimum+maximum)-mininum
+    predarray=predarray*(minimum+maximum)-minimum
     predarray.tofile(predpath)
 
     array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
