@@ -59,6 +59,8 @@ xsize=128
 ysize=128
 region_num=4*4*height
 path="./aramco/"
+maximum=0
+minimum=0
 with open("minmax.txt","r") as f:
     l=eval(f.read().strip())
     maximum=l[0]
