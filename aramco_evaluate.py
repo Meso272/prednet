@@ -24,7 +24,7 @@ from aramco_settings import *
 #batch_size = 10
 nt = 10
 
-weights_file = os.path.join(WEIGHTS_DIR, 'tensorflow_weights/prednet_aramco_weights.hdf5')
+weights_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_weights.hdf5')
 json_file = os.path.join(WEIGHTS_DIR, 'prednet_aramco_model.json')
 #test_file = os.path.join(DATA_DIR, 'X_test.hkl')
 #test_sources = os.path.join(DATA_DIR, 'sources_test.hkl')
