@@ -107,7 +107,7 @@ for i in range(0,test_timestep_num):
 
         endx=min(x+xsize,length)
         endy=min(y+ysize,width)
-        print(preds[i][-1])
+        print(list(preds[i]))
         predarray[x:endx,y:endy,z]=preds[i,-1,:(endx-x),:(endy-y),0]
     predarray=predarray*(minimum+maximum)-minimum
     predarray.tofile(predpath)
