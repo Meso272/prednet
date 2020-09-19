@@ -37,7 +37,7 @@ train_start=1400
 val_start=1500
 test_start=1520
 path="./aramco/"
-train=np.zeros((train_num,xsize,ysize,1))
+train=np.zeros((train_num,xsize,ysize,1),dtype=np.float32)
 train_source=[(0,0,0)]*train_num
 for i in range(0,train_snapshot_num):
 
@@ -62,7 +62,7 @@ for i in range(0,train_snapshot_num):
                 #print(array[x:x+size,y:y+size])
 
 
-val=np.zeros((val_num,xsize,ysize,1))
+val=np.zeros((val_num,xsize,ysize,1),dtype=np.float32)
 val_source=[0]*val_num
 for i in range(0,val_snapshot_num):
 
@@ -85,7 +85,7 @@ for i in range(0,val_snapshot_num):
                 val_source[count*val_snapshot_num+i]=(x,y,z)
                 count=count+1
 
-test=np.zeros((test_num,xsize,ysize,1))
+test=np.zeros((test_num,xsize,ysize,1),dtype=np.float32)
 test_source=[0]*test_num
 for i in range(0,test_snapshot_num):
 
@@ -114,9 +114,9 @@ with open("minmax.txt","w") as f:
     f.write( str( (maximum,minimum) ) )
 
 train=(train-minimum)/(maximum-minimum)
-print(val)
+#print(val)
 val=(val-minimum)/(maximum-minimum)
-print(val)
+#print(val)
 #test=(test+minimum)/(minimum+maximum)
 
 hkl.dump(train, os.path.join(DATA_DIR, 'X_train.hkl'))
