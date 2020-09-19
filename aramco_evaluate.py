@@ -98,7 +98,7 @@ for i in range(0,test_timestep_num):
     filepath=os.path.join(path,filename)
     predpath=os.path.join(path,predname)
     preds=test_model.predict(series,batch_size=16)
-    print(list(preds[i]))
+    
     predarray=np.zeros((length,width,height),dtype=np.float32)
     for i,cor in enumerate(source):
         x=cor[0]
@@ -107,7 +107,7 @@ for i in range(0,test_timestep_num):
 
         endx=min(x+xsize,length)
         endy=min(y+ysize,width)
-        
+        print(list(preds[i]))
         predarray[x:endx,y:endy,z]=preds[i,-1,:(endx-x),:(endy-y),0]
     predarray=predarray*(minimum+maximum)-minimum
     predarray.tofile(predpath)
