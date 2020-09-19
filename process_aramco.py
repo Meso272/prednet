@@ -113,8 +113,8 @@ minimum=min(np.min(train),np.min(val),np.min(test))
 with open("minmax.txt","w") as f:
     f.write( str( (maximum,minimum) ) )
 
-train=(train+minimum)/(minimum+maximum)
-val=(val+minimum)/(minimum+maximum)
+train=(train-minimum)/(maximum-minimum)
+val=(val-minimum)/(maximum-minimum)
 #test=(test+minimum)/(minimum+maximum)
 
 hkl.dump(train, os.path.join(DATA_DIR, 'X_train.hkl'))

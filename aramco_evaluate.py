@@ -86,7 +86,7 @@ for i in range(0,nt):
                 padx=xsize-pict.shape[0]
                 pady=ysize-pict.shape[1]
                 pict=np.pad(pict,((0,padx),(0,pady)))
-                pict=(np.expand_dims(pict,2)+minimum)/(minimum+maximum)
+                pict=(np.expand_dims(pict,2)-minimum)/(maximum-minimum)
                 series[idx][i]=pict
                 source[idx]=(x,y,z)
                 idx=idx+1
@@ -98,7 +98,7 @@ for i in range(0,test_timestep_num):
     filepath=os.path.join(path,filename)
     predpath=os.path.join(path,predname)
     preds=test_model.predict(series,batch_size=16)
-    
+
     predarray=np.zeros((length,width,height),dtype=np.float32)
     for i,cor in enumerate(source):
         x=cor[0]
@@ -107,9 +107,9 @@ for i in range(0,test_timestep_num):
 
         endx=min(x+xsize,length)
         endy=min(y+ysize,width)
-        print(list(preds[i]))
+        #print(list(preds[i]))
         predarray[x:endx,y:endy,z]=preds[i,-1,:(endx-x),:(endy-y),0]
-    predarray=predarray*(minimum+maximum)-minimum
+    predarray=predarray*(maximum-minimum)+minimum
     predarray.tofile(predpath)
 
     array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
@@ -124,7 +124,7 @@ for i in range(0,test_timestep_num):
                 padx=xsize-pict.shape[0]
                 pady=ysize-pict.shape[1]
                 pict=np.pad(pict,((0,padx),(0,pady)))
-                pict=(np.expand_dims(pict,2)+minimum)/(minimum+maximum)
+                pict=(np.expand_dims(pict,2)-minimum)/(maximum-minimum)
                 series[idx]=np.concatenate(( series[idx,1:,:,:,:],np.expand_dims(pict,axis=0) ),axis=0)
                 idx=idx+1
                
