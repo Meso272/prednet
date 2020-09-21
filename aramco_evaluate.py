@@ -162,7 +162,7 @@ for i in range(0,test_timestep_num):
         #print(list(preds[i]))
         predarray[x:endx,y:endy,z]=preds[i,-1,:(endx-x),:(endy-y),0]
     predarray=predarray*(maximum-minimum)+minimum
-    predarray.tofile(predpath)
+    #predarray.tofile(predpath)
 
     origarray=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
     rng=np.max(origarray)-np.min(origarray)
