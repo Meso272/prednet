@@ -18,7 +18,56 @@ from keras.layers import Input, Dense, Flatten
 from prednet import PredNet
 from data_utils import SequenceGenerator
 from aramco_settings import *
+import argparse
 
+def quantize(data,pred,error_bound):
+    radius=32768
+    diff = data - pred
+    quant_index = (int) (abs(diff)/ error_bound) + 1
+    #print(quant_index)
+    if (quant_index < radius * 2) :
+        quant_index =quant_index>> 1
+        half_index = quant_index
+        quant_index =quant_index<< 1
+        #print(quant_index)
+        quant_index_shifted=0
+        if (diff < 0) :
+            quant_index = -quant_index
+            quant_index_shifted = radius - half_index
+        else :
+            quant_index_shifted = radius + half_index
+        
+        decompressed_data = pred + quant_index * error_bound
+        #print(decompressed_data)
+        if abs(decompressed_data - data) > error_bound :
+            #print("b")
+            return 0,data
+        else:
+            #print("c")
+            data = decompressed_data
+            return quant_index_shifted,data
+        
+    else:
+        #print("a")
+        return 0,data
+    
+
+
+parser = argparse.ArgumentParser(description='predictor')
+
+
+parser.add_argument('--out', type=str, 
+                    )
+
+parser.add_argument('--error', type=float, default=1e-3)
+
+
+
+
+
+
+
+args = parser.parse_args()
 
 #n_plot = 40
 #batch_size = 10
@@ -58,7 +107,8 @@ height=235
 xsize=128
 ysize=128
 region_num=4*4*height
-path="./aramco/"
+origfolder="./aramco/"
+predfolder=args.out
 maximum=0
 minimum=0
 with open("minmax.txt","r") as f:
@@ -74,7 +124,7 @@ source=[0]*region_num
 series_start=test_start-nt
 for i in range(0,nt):
     filename= "aramco-snapshot-%s.f32" % str(i+series_start)
-    filepath=os.path.join(path,filename)
+    filepath=os.path.join(origfolder,filename)
     array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
     idx=0
     for z in range(0,height):
@@ -94,9 +144,11 @@ for i in range(0,nt):
 for i in range(0,test_timestep_num):
 
     filename= "aramco-snapshot-%s.f32" % str(i+test_start)
-    predname="aramco-snapshot-%s-pred.f32" % str(i+test_start)
-    filepath=os.path.join(path,filename)
-    predpath=os.path.join(path,predname)
+    qname="%sq.f32" % str(i+test_start)
+    uname="%su.f32" % str(i+test_start)
+    filepath=os.path.join(origfolder,filename)
+    qpath=os.path.join(predfolder,qname)
+    upath=os.path.join(predfolder,uname)
     preds=test_model.predict(series,batch_size=16)
 
     predarray=np.zeros((length,width,height),dtype=np.float32)
@@ -112,7 +164,23 @@ for i in range(0,test_timestep_num):
     predarray=predarray*(maximum-minimum)+minimum
     predarray.tofile(predpath)
 
-    array=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
+    origarray=np.fromfile(filepath,dtype=np.float32).reshape((length,width,height))
+    rng=np.max(origarray)-np.min(origarray)
+    errorbound=rng*args.error
+    qs=[]
+    us=[]
+
+    for i in range(length):
+        for j in range(width):
+            for k in range(height):
+                q,u=quantize(origarray[i][j][k],predarray[i][j][k],errorbound)
+                qs.append(q)
+                if q==0:
+                    us.append(u)
+                else:
+                    origarray[i][j][k]=u
+    np.array(q,dtype=np.int32).tofile(qpath)
+    np.array(u,dtype=np.float32).tofile(upath)
         #print(array)
     idx=0
     for z in range(0,height):
@@ -120,7 +188,7 @@ for i in range(0,test_timestep_num):
             for y in range(0,width,ysize):
                 endx=min(x+xsize,length)
                 endy=min(y+ysize,width)
-                pict=array[x:endx,y:endy,z]
+                pict=origarray[x:endx,y:endy,z]
                 padx=xsize-pict.shape[0]
                 pady=ysize-pict.shape[1]
                 pict=np.pad(pict,((0,padx),(0,pady)))
