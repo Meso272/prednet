@@ -179,8 +179,8 @@ for i in range(0,test_timestep_num):
                     us.append(u)
                 else:
                     origarray[i][j][k]=u
-    np.array(q,dtype=np.int32).tofile(qpath)
-    np.array(u,dtype=np.float32).tofile(upath)
+    np.array(qs,dtype=np.int32).tofile(qpath)
+    np.array(us,dtype=np.float32).tofile(upath)
         #print(array)
     idx=0
     for z in range(0,height):
